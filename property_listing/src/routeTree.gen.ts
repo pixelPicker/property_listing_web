@@ -11,7 +11,6 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as PropertiesAddPropertyRouteImport } from './routes/properties/add-property'
-import { Route as PropertiesIdRouteImport } from './routes/properties/$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -23,39 +22,30 @@ const PropertiesAddPropertyRoute = PropertiesAddPropertyRouteImport.update({
   path: '/properties/add-property',
   getParentRoute: () => rootRouteImport,
 } as any)
-const PropertiesIdRoute = PropertiesIdRouteImport.update({
-  id: '/properties/$id',
-  path: '/properties/$id',
-  getParentRoute: () => rootRouteImport,
-} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/properties/$id': typeof PropertiesIdRoute
   '/properties/add-property': typeof PropertiesAddPropertyRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/properties/$id': typeof PropertiesIdRoute
   '/properties/add-property': typeof PropertiesAddPropertyRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/properties/$id': typeof PropertiesIdRoute
   '/properties/add-property': typeof PropertiesAddPropertyRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/properties/$id' | '/properties/add-property'
+  fullPaths: '/' | '/properties/add-property'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/properties/$id' | '/properties/add-property'
-  id: '__root__' | '/' | '/properties/$id' | '/properties/add-property'
+  to: '/' | '/properties/add-property'
+  id: '__root__' | '/' | '/properties/add-property'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  PropertiesIdRoute: typeof PropertiesIdRoute
   PropertiesAddPropertyRoute: typeof PropertiesAddPropertyRoute
 }
 
@@ -75,19 +65,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PropertiesAddPropertyRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/properties/$id': {
-      id: '/properties/$id'
-      path: '/properties/$id'
-      fullPath: '/properties/$id'
-      preLoaderRoute: typeof PropertiesIdRouteImport
-      parentRoute: typeof rootRouteImport
-    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  PropertiesIdRoute: PropertiesIdRoute,
   PropertiesAddPropertyRoute: PropertiesAddPropertyRoute,
 }
 export const routeTree = rootRouteImport

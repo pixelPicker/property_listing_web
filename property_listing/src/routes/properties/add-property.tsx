@@ -20,7 +20,8 @@ function RouteComponent() {
 }
 
 type PropertyTypeUnion = Exclude<(typeof PROPERTY_TYPES)[number], 'all'>
-export default function AddPropertyForm() {
+
+function AddPropertyForm() {
   const [propertyType, setPropertyType] = useState<PropertyTypeUnion>('condo')
   const [submissionError, setSubmissionError] = useState<string | null>(null)
   const { refetch } = usePropertyContext()

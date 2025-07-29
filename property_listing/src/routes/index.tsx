@@ -12,7 +12,14 @@ import {
 import { PROPERTY_TYPES } from '@/utils/constants'
 import { HousePlus, Search } from 'lucide-react'
 import type { AllPropertyTypes, PropertyOnPage, PropertyPage } from '@/types'
-import { useRef, useState } from 'react'
+import { useState } from 'react'
+import {
+  Dialog,
+  DialogHeader,
+  DialogContent,
+  DialogTitle,
+  DialogDescription,
+} from '@/components/ui/dialog'
 
 export const Route = createFileRoute('/')({
   component: RouteComponent,
@@ -22,6 +29,14 @@ function RouteComponent() {
   const { properties, error, isLoading } = usePropertyContext()
   const [searchQuery, setSearchQuery] = useState('')
 
+  const [modalOpen, setModalOpen] = useState(false)
+  const [selectedProperty, setSelectedProperty] = useState<PropertyOnPage>()
+
+  const handleModalChange = (property: PropertyOnPage) => {
+    setSelectedProperty(property)
+    setModalOpen(true)
+  }
+
   if (isLoading) {
     return <LoadingState message="Wait while we are fetching properties" />
   }
@@ -30,9 +45,8 @@ function RouteComponent() {
   }
 
   return (
-    <div className="p-4 relative font-Teachers flex flex-col w-full h-full ">
+    <div className="p-4 relative font-Teachers flex flex-col w-full h-full">
       <Header setSearchQuery={setSearchQuery} searchQuery={searchQuery} />
-
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5 overflow-y-auto">
         {properties.data
           .filter(
@@ -43,16 +57,33 @@ function RouteComponent() {
               property.city.toLowerCase().includes(searchQuery.toLowerCase()),
           )
           .map((property) => (
-            <Property property={property} key={property.id} />
+            <Property
+              handleModalChange={(property: PropertyOnPage) =>
+                handleModalChange(property)
+              }
+              property={property}
+              key={property.id}
+            />
           ))}
       </div>
-
       <Footer properties={properties} />
+
+      <PropertyDialog
+        modalOpen={modalOpen}
+        property={selectedProperty ?? properties.data[0]}
+        setModalOpen={setModalOpen}
+      />
     </div>
   )
 }
 
-function Property({ property }: { property: PropertyOnPage }) {
+function Property({
+  property,
+  handleModalChange,
+}: {
+  property: PropertyOnPage
+  handleModalChange: (property: PropertyOnPage) => void
+}) {
   return (
     <div className="bg-gray-300 dark:bg-gray-600 rounded-2xl p-5 shadow-md flex flex-col justify-between min-h-[220px]">
       <div className="flex flex-col gap-1.5">
@@ -72,13 +103,12 @@ function Property({ property }: { property: PropertyOnPage }) {
           ₹ {property.price.toLocaleString()}
         </div>
 
-        <Link
-          to={`/properties/$id`}
-          params={{ id: property.id }}
+        <button
           className="px-4 py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-500 transition"
+          onClick={() => handleModalChange(property)}
         >
           See Details
-        </Link>
+        </button>
       </div>
     </div>
   )
@@ -158,5 +188,53 @@ function Footer({ properties }: { properties: PropertyPage }) {
         Next Page
       </button>
     </div>
+  )
+}
+
+function PropertyDialog({
+  property,
+  modalOpen,
+  setModalOpen,
+}: {
+  property: PropertyOnPage
+  modalOpen: boolean
+  setModalOpen: React.Dispatch<React.SetStateAction<boolean>>
+}) {
+  return (
+    <Dialog open={modalOpen} onOpenChange={setModalOpen}>
+      <DialogContent className="max-w-2xl dark:bg-gray-700">
+        <DialogHeader>
+          <DialogTitle className="text-3xl">
+            {property.property_name}
+          </DialogTitle>
+          <DialogDescription className="text-lg text-muted-foreground">
+            {property.address}, {property.city} {property.postal_code}
+          </DialogDescription>
+        </DialogHeader>
+
+        <div className="mt-4 space-y-4">
+          <div className="flex flex-wrap gap-4 items-center">
+            <span className="bg-gray-700 dark:bg-gray-800 text-gray-300 px-4 py-1 rounded-full">
+              {property.property_type.toUpperCase()}
+            </span>
+            <span className="text-xl font-semibold">
+              ₹ {property.price.toLocaleString()}
+            </span>
+            <span className="text-muted-foreground">
+              Listed on: {new Date(property.listing_date).toLocaleDateString()}
+            </span>
+          </div>
+
+          <hr className="my-2 border-gray-200 dark:border-gray-600" />
+
+          <div>
+            <h2 className="text-2xl font-semibold mb-1">Description</h2>
+            <p className="leading-relaxed max-w-[60ch]">
+              {property.description}
+            </p>
+          </div>
+        </div>
+      </DialogContent>
+    </Dialog>
   )
 }
