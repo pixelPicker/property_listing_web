@@ -52,11 +52,11 @@ export default function PropertyDetail({
   return (
     <div className="w-full h-full grid place-items-center">
       <div className="mx-auto px-6 py-8">
-        <div className="bg-gray-300 rounded-xl shadow-lg p-4">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">
+        <div className="bg-gray-300 dark:bg-gray-700 rounded-xl shadow-lg p-4">
+          <h1 className="text-3xl font-bold mb-2">
             {property.property_name}
           </h1>
-          <p className="text-lg text-gray-700 mb-4">
+          <p className="text-lg mb-4">
             {property.address}, {property.city} {property.postal_code}
           </p>
 
@@ -64,10 +64,10 @@ export default function PropertyDetail({
             <span className="inline-block bg-gray-800 text-white px-4 py-1 rounded-full text-base">
               {property.property_type.toUpperCase()}
             </span>
-            <span className="text-xl font-semibold text-gray-900">
+            <span className="text-xl font-semibold">
               ₹ {property.price.toLocaleString()}
             </span>
-            <span className="text-gray-500 text-base">
+            <span>
               Listed on: {new Date(property.listing_date).toLocaleDateString()}
             </span>
           </div>
@@ -75,10 +75,10 @@ export default function PropertyDetail({
           <hr className='w-full h-[1px] bg-gray-100 mt-6 mb-4' />
 
           <div >
-            <h2 className="text-2xl font-semibold text-gray-900 mb-2">
+            <h2 className="text-2xl font-semibold mb-2">
               Description
             </h2>
-            <p className="text-lg text-gray-700 leading-relaxed max-w-[50ch]">
+            <p className="text-lg leading-relaxed max-w-[50ch]">
               {property.description}
             </p>
           </div>

@@ -8,7 +8,7 @@ export const FormLabel = ({
   return (
     <label
       htmlFor={htmlFor}
-      className="block font-medium mb-1 text-gray-700"
+      className="block font-medium mb-1 text-gray-700 dark:text-gray-500"
     >
       {children}
     </label>

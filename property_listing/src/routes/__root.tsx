@@ -1,11 +1,12 @@
 import { Link, Outlet, createRootRoute } from '@tanstack/react-router'
-import { Building2, Heart, MapPin } from 'lucide-react'
+import { Building2, MapPin, Moon, Sun } from 'lucide-react'
+import { useState } from 'react'
 
 export const Route = createRootRoute({
   component: () => (
-    <div className="w-screen h-screen flex font-Teachers bg-gray-100">
+    <div className="w-screen h-screen flex font-Teachers bg-gray-100 dark:bg-gray-800">
       <Sidebar />
-      <div className="w-[1.5px] h-screen bg-gray-300" />
+      <div className="w-[1.5px] h-screen bg-gray-300 dark:bg-gray-700" />
       <Outlet />
     </div>
   ),
@@ -14,19 +15,24 @@ export const Route = createRootRoute({
 function Sidebar() {
   const navLinks = [
     { name: 'Properties', id: 'home', icon: Building2, location: '/' },
-    { name: 'Saved Listings', id: 'saved', icon: Heart, location: '/saved' },
   ]
+  const [isDark, setIsDark] = useState(
+    document.documentElement.classList.contains('dark') ? true : false,
+  )
+
+  const toggleDarkMode = () => {
+    setIsDark((prev) => !prev)
+    document.documentElement.classList.toggle('dark')
+  }
 
   return (
-    <div className="p-4">
+    <div className="p-4 flex flex-col">
       <div className="flex font-Teachers justify-start items-center gap-2">
         <MapPin className="size-8" />
         <h1 className="text-xl font-semibold">PropertyHub</h1>
       </div>
-
       <div className="h-8" />
-
-      <nav className="w-60">
+      <nav className="w-60 flex-1">
         <ul className="flex flex-col gap-2">
           {navLinks.map((link) => (
             <li key={link.id}>
@@ -44,6 +50,25 @@ function Sidebar() {
           ))}
         </ul>
       </nav>
+
+      <div>
+        <button
+          className="rounded-sm dark:bg-gray-700 bg-gray-400 p-2 px-4 pr-20 flex items-center gap-5 hover:bg-gray-500 transition-all cursor-pointer w-full"
+          onClick={toggleDarkMode}
+        >
+          {isDark ? (
+            <>
+              <Moon />
+              <p>Dark</p>
+            </>
+          ) : (
+            <>
+              <Sun />
+              <p>Light</p>
+            </>
+          )}
+        </button>
+      </div>
     </div>
   )
 }

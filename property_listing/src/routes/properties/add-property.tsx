@@ -64,7 +64,7 @@ export default function AddPropertyForm() {
     <div className="w-full h-full grid place-items-center">
       <form
         onSubmit={handleSubmit}
-        className="max-w-xl mx-auto bg-gray-100 p-6 rounded-xl space-y-4"
+        className="max-w-xl mx-auto bg-gray-100 dark:bg-gray-800 p-6 rounded-xl space-y-4"
       >
         <h2 className="text-3xl font-semibold text-center mb-6">
           Create New Property
@@ -77,7 +77,7 @@ export default function AddPropertyForm() {
             name="property_name"
             id="property_name"
             required
-            className="w-full px-3 py-2 border rounded-md"
+            className="w-full px-3 py-2 border rounded-md dark:border-gray-500 dark:placeholder:text-gray-500"
             placeholder="eg. Lakeview Apartment"
           />
         </div>
@@ -89,7 +89,7 @@ export default function AddPropertyForm() {
             name="address"
             id="address"
             required
-            className="w-full px-3 py-2 border rounded-md"
+            className="w-full px-3 py-2 border rounded-md dark:border-gray-500 dark:placeholder:text-gray-500"
             placeholder="eg. 1234 Elm Street"
           />
         </div>
@@ -102,7 +102,7 @@ export default function AddPropertyForm() {
               name="city"
               id="city"
               required
-              className="w-full px-3 py-2 border rounded-md"
+              className="w-full px-3 py-2 border rounded-md dark:border-gray-500 dark:placeholder:text-gray-500"
             />
           </div>
 
@@ -113,7 +113,7 @@ export default function AddPropertyForm() {
               name="postal_code"
               id="postal_code"
               required
-              className="w-full px-3 py-2 border rounded-md"
+              className="w-full px-3 py-2 border rounded-md dark:border-gray-500 dark:placeholder:text-gray-500"
             />
           </div>
         </div>
@@ -126,7 +126,7 @@ export default function AddPropertyForm() {
               name="price"
               id="price"
               required
-              className="w-full px-3 py-2 border rounded-md"
+              className="w-full px-3 py-2 border rounded-md dark:border-gray-500 dark:placeholder:text-gray-500"
               placeholder="eg. 12000000"
             />
           </div>
@@ -138,7 +138,7 @@ export default function AddPropertyForm() {
               name="listing_date"
               id="listing_date"
               required
-              className="w-full px-3 py-2 border rounded-md"
+              className="w-full px-3 py-2 border rounded-md dark:border-gray-500 dark:placeholder:text-gray-500"
             />
           </div>
         </div>
@@ -151,24 +151,24 @@ export default function AddPropertyForm() {
             value={propertyType}
             defaultValue={propertyType}
           >
-            <SelectTrigger className="w-full px-3 py-2 border rounded-md">
+            <SelectTrigger className="w-full px-3 py-2 border rounded-md dark:border-gray-500 dark:bg-transparent dark:placeholder:text-gray-500">
               <SelectValue placeholder="Select a type" />
             </SelectTrigger>
-            <SelectContent className="text-gray-800 bg-white rounded-lg shadow-md border border-gray-200">
+            <SelectContent className="text-gray-800 bg-gray-300 dark:bg-gray-700 rounded-lg shadow-md ">
               <SelectItem
-                className="cursor-pointer font-Aeonik-Regular px-4 py-2 hover:bg-gray-100 transition-all duration-150 focus:bg-gray-100 focus:text-dark-what"
+                className="cursor-pointer font-Aeonik-Regular px-4 py-2 hover:bg-gray-500 bg-transparent transition-all duration-150 dark:text-gray-300 text-gray-700"
                 value="condo"
               >
                 Condo
               </SelectItem>
               <SelectItem
-                className="cursor-pointer font-Aeonik-Regular px-4 py-2 hover:bg-gray-100 transition-all duration-150 focus:bg-gray-100 focus:text-dark-what"
+                className="cursor-pointer font-Aeonik-Regular px-4 py-2 hover:bg-gray-500 bg-transparent transition-all duration-150 dark:text-gray-300 text-gray-700"
                 value="apartment"
               >
                 Apartment
               </SelectItem>
               <SelectItem
-                className="cursor-pointer font-Aeonik-Regular px-4 py-2 hover:bg-gray-100 transition-all duration-150 focus:bg-gray-100 focus:text-dark-what"
+                className="cursor-pointer font-Aeonik-Regular px-4 py-2 hover:bg-gray-500 bg-transparent transition-all duration-150 dark:text-gray-300 text-gray-700"
                 value="house"
               >
                 House
@@ -184,7 +184,7 @@ export default function AddPropertyForm() {
             name="description"
             id="description"
             required
-            className="w-full px-3 py-2 border rounded-md"
+            className="w-full px-3 py-2 border rounded-md dark:border-gray-500 dark:placeholder:text-gray-500"
             placeholder="Short summary about the property"
           />
         </div>
@@ -197,7 +197,7 @@ export default function AddPropertyForm() {
 
         <button
           type="submit"
-          className="w-full mt-4 bg-gray-800 text-white py-2 px-4 rounded-lg hover:bg-gray-700 transition"
+          className="w-full mt-4 dark:bg-gray-700 bg-gray-400 text-gray-700 dark:text-gray-400 py-2 px-4 text-lg font-medium rounded-lg hover:bg-gray-500 transition"
         >
           Create Property
         </button>
